@@ -115,14 +115,20 @@ class _AddHewanPageState extends State<AddHewanPage> {
                   validator: (v) => v == null ? 'Status harus dipilih' : null,
                 ),
                 const SizedBox(height: 24),
-                ElevatedButton(
-                  onPressed: _onSimpan,
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                    backgroundColor: Colors.deepPurple,
-                  ),
-                  child: const Text('Simpan', style: TextStyle(fontSize: 16, color: Colors.white)),
+                BlocBuilder<HewanBloc, HewanState>(
+                  builder: (context, state) {
+                    return ElevatedButton(
+                      onPressed: state is HewanLoading ? null : _onSimpan,
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        backgroundColor: Colors.deepPurple,
+                      ),
+                      child: state is HewanLoading
+                          ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+                          : const Text('Simpan', style: TextStyle(fontSize: 16, color: Colors.white)),
+                    );
+                  },
                 ),
               ],
             ),
