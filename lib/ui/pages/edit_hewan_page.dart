@@ -4,6 +4,7 @@ import 'package:restapi0174/data/models/hewan_model.dart';
 import 'package:restapi0174/logic/bloc/hewan/hewan_bloc.dart';
 import 'package:restapi0174/logic/bloc/hewan/hewan_event.dart';
 import 'package:restapi0174/logic/bloc/hewan/hewan_state.dart';
+import 'package:restapi0174/ui/pages/dashboard_page.dart';
 import 'package:restapi0174/ui/widgets/custom_widget.dart';
 
 class EditHewanPage extends StatefulWidget {
@@ -67,6 +68,10 @@ class _EditHewanPageState extends State<EditHewanPage> {
           if (state is HewanCreatedSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Data hewan berhasil diperbarui')),
+            );
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => const DashboardPage()),
             );
           } else if (state is HewanError) {
             ScaffoldMessenger.of(context).showSnackBar(
