@@ -14,6 +14,7 @@ class _AddHewanPageState extends State<AddHewanPage> {
   final _jenisController = TextEditingController();
   final _tanggalLahirController = TextEditingController();
   final _hargaController = TextEditingController();
+  String? _status;
 
   @override
   void dispose() {
@@ -65,6 +66,18 @@ class _AddHewanPageState extends State<AddHewanPage> {
                 hint: 'Masukkan harga',
                 prefixIcon: Icons.attach_money,
                 keyboardType: TextInputType.number,
+              ),
+              const SizedBox(height: 16),
+              DropdownButtonFormField<String>(
+                value: _status,
+                decoration: InputDecoration(
+                  labelText: 'Status',
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                ),
+                items: ['Tersedia', 'Terjual', 'Dipesan']
+                    .map((s) => DropdownMenuItem(value: s, child: Text(s)))
+                    .toList(),
+                onChanged: (val) => setState(() => _status = val),
               ),
             ],
           ),
