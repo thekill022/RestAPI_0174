@@ -37,6 +37,12 @@ class _EditHewanPageState extends State<EditHewanPage> {
     super.dispose();
   }
 
+  void _onUpdate() {
+    if (_formKey.currentState!.validate()) {
+      // update data
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,6 +56,7 @@ class _EditHewanPageState extends State<EditHewanPage> {
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               CustomTextField(
                 controller: _namaController,
@@ -78,6 +85,28 @@ class _EditHewanPageState extends State<EditHewanPage> {
                 hint: 'Masukkan harga',
                 prefixIcon: Icons.attach_money,
                 keyboardType: TextInputType.number,
+              ),
+              const SizedBox(height: 16),
+              DropdownButtonFormField<String>(
+                value: _status,
+                decoration: InputDecoration(
+                  labelText: 'Status',
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                ),
+                items: ['Tersedia', 'Terjual', 'Dipesan']
+                    .map((s) => DropdownMenuItem(value: s, child: Text(s)))
+                    .toList(),
+                onChanged: (val) => setState(() => _status = val),
+              ),
+              const SizedBox(height: 24),
+              ElevatedButton(
+                onPressed: _onUpdate,
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  backgroundColor: Colors.deepPurple,
+                ),
+                child: const Text('Update', style: TextStyle(fontSize: 16, color: Colors.white)),
               ),
             ],
           ),
