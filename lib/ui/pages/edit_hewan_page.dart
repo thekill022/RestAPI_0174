@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:restapi0174/data/models/hewan_model.dart';
+import 'package:restapi0174/ui/widgets/custom_widget.dart';
 
 class EditHewanPage extends StatefulWidget {
   final HewanModel hewan;
@@ -46,7 +47,19 @@ class _EditHewanPageState extends State<EditHewanPage> {
       ),
       body: Form(
         key: _formKey,
-        child: const Center(child: Text('Form Edit Hewan')),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            children: [
+              CustomTextField(
+                controller: _namaController,
+                label: 'Nama Hewan',
+                hint: 'Masukkan nama hewan',
+                prefixIcon: Icons.pets,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
