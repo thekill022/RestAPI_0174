@@ -11,7 +11,7 @@ class HewanRepository {
   Future<List<HewanModel>> getAllHewan() async {
     final token = await storage.getToken();
 
-    final response = await http.post(
+    final response = await http.get(
       Uri.parse("$baseUrl/hewan"),
       headers: {
         'Authorization' : 'Bearer $token',
