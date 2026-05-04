@@ -22,6 +22,13 @@ class _DashboardPageState extends State<DashboardPage> {
     context.read<HewanBloc>().add(FetchHewan());
   }
 
+  String _formatHarga(int harga) {
+    return harga.toString().replaceAllMapped(
+      RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+      (Match m) => '${m[1]}.',
+    );
+  }
+
   Color _getStatusColor(String status) {
     switch (status.toLowerCase()) {
       case 'tersedia':
@@ -174,7 +181,7 @@ class _DashboardPageState extends State<DashboardPage> {
             Text('Jenis: ${hewan.jenis}'),
             Text('Tanggal Lahir: ${hewan.tanggalLahir}'),
             Text(
-              'Harga: Rp ${hewan.harga.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')}',
+              'Harga: Rp ${_formatHarga(hewan.harga)}',
               style: const TextStyle(
                 fontWeight: FontWeight.w600,
                 color: Colors.deepPurple,
