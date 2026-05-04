@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:restapi0174/logic/bloc/hewan/hewan_bloc.dart';
+import 'package:restapi0174/logic/bloc/hewan/hewan_event.dart';
+import 'package:restapi0174/logic/bloc/hewan/hewan_state.dart';
 import 'package:restapi0174/ui/widgets/custom_widget.dart';
 
 class AddHewanPage extends StatefulWidget {
@@ -27,7 +31,14 @@ class _AddHewanPageState extends State<AddHewanPage> {
 
   void _onSimpan() {
     if (_formKey.currentState!.validate()) {
-      // simpan data
+      final data = {
+        'nama': _namaController.text.trim(),
+        'jenis': _jenisController.text.trim(),
+        'tanggalLahir': _tanggalLahirController.text.trim(),
+        'harga': int.tryParse(_hargaController.text) ?? 0,
+        'status': _status,
+      };
+      context.read<HewanBloc>().add(CreateHewan(data));
     }
   }
 
@@ -39,64 +50,77 @@ class _AddHewanPageState extends State<AddHewanPage> {
         backgroundColor: Colors.deepPurple,
         foregroundColor: Colors.white,
       ),
-      body: Form(
-        key: _formKey,
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              CustomTextField(
-                controller: _namaController,
-                label: 'Nama Hewan',
-                hint: 'Masukkan nama hewan',
-                prefixIcon: Icons.pets,
-              ),
-              const SizedBox(height: 16),
-              CustomTextField(
-                controller: _jenisController,
-                label: 'Jenis Hewan',
-                hint: 'Masukkan jenis hewan',
-                prefixIcon: Icons.category,
-              ),
-              const SizedBox(height: 16),
-              CustomTextField(
-                controller: _tanggalLahirController,
-                label: 'Tanggal Lahir',
-                hint: 'YYYY-MM-DD',
-                prefixIcon: Icons.calendar_today,
-              ),
-              const SizedBox(height: 16),
-              CustomTextField(
-                controller: _hargaController,
-                label: 'Harga',
-                hint: 'Masukkan harga',
-                prefixIcon: Icons.attach_money,
-                keyboardType: TextInputType.number,
-              ),
-              const SizedBox(height: 16),
-              DropdownButtonFormField<String>(
-                value: _status,
-                decoration: InputDecoration(
-                  labelText: 'Status',
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+      body: BlocListener<HewanBloc, HewanState>(
+        listener: (context, state) {
+          if (state is HewanCreatedSuccess) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Data hewan berhasil ditambahkan')),
+            );
+          } else if (state is HewanError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.message)),
+            );
+          }
+        },
+        child: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                CustomTextField(
+                  controller: _namaController,
+                  label: 'Nama Hewan',
+                  hint: 'Masukkan nama hewan',
+                  prefixIcon: Icons.pets,
                 ),
-                items: ['Tersedia', 'Terjual', 'Dipesan']
-                    .map((s) => DropdownMenuItem(value: s, child: Text(s)))
-                    .toList(),
-                onChanged: (val) => setState(() => _status = val),
-              ),
-              const SizedBox(height: 24),
-              ElevatedButton(
-                onPressed: _onSimpan,
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                  backgroundColor: Colors.deepPurple,
+                const SizedBox(height: 16),
+                CustomTextField(
+                  controller: _jenisController,
+                  label: 'Jenis Hewan',
+                  hint: 'Masukkan jenis hewan',
+                  prefixIcon: Icons.category,
                 ),
-                child: const Text('Simpan', style: TextStyle(fontSize: 16, color: Colors.white)),
-              ),
-            ],
+                const SizedBox(height: 16),
+                CustomTextField(
+                  controller: _tanggalLahirController,
+                  label: 'Tanggal Lahir',
+                  hint: 'YYYY-MM-DD',
+                  prefixIcon: Icons.calendar_today,
+                ),
+                const SizedBox(height: 16),
+                CustomTextField(
+                  controller: _hargaController,
+                  label: 'Harga',
+                  hint: 'Masukkan harga',
+                  prefixIcon: Icons.attach_money,
+                  keyboardType: TextInputType.number,
+                ),
+                const SizedBox(height: 16),
+                DropdownButtonFormField<String>(
+                  value: _status,
+                  decoration: InputDecoration(
+                    labelText: 'Status',
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                  ),
+                  items: ['Tersedia', 'Terjual', 'Dipesan']
+                      .map((s) => DropdownMenuItem(value: s, child: Text(s)))
+                      .toList(),
+                  onChanged: (val) => setState(() => _status = val),
+                ),
+                const SizedBox(height: 24),
+                ElevatedButton(
+                  onPressed: _onSimpan,
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    backgroundColor: Colors.deepPurple,
+                  ),
+                  child: const Text('Simpan', style: TextStyle(fontSize: 16, color: Colors.white)),
+                ),
+              ],
+            ),
           ),
         ),
       ),
