@@ -44,6 +44,13 @@ class _AddHewanPageState extends State<AddHewanPage> {
                 hint: 'Masukkan nama hewan',
                 prefixIcon: Icons.pets,
               ),
+              const SizedBox(height: 16),
+              CustomTextField(
+                controller: _jenisController,
+                label: 'Jenis Hewan',
+                hint: 'Masukkan jenis hewan',
+                prefixIcon: Icons.category,
+              ),
             ],
           ),
         ),
