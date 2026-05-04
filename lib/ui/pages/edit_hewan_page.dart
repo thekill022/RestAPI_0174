@@ -110,12 +110,30 @@ class _EditHewanPageState extends State<EditHewanPage> {
                   validator: (v) => v == null || v.isEmpty ? 'Jenis tidak boleh kosong' : null,
                 ),
                 const SizedBox(height: 16),
-                CustomTextField(
+                TextFormField(
                   controller: _tanggalLahirController,
-                  label: 'Tanggal Lahir',
-                  hint: 'YYYY-MM-DD',
-                  prefixIcon: Icons.calendar_today,
+                  readOnly: true,
                   validator: (v) => v == null || v.isEmpty ? 'Tanggal lahir tidak boleh kosong' : null,
+                  decoration: InputDecoration(
+                    labelText: 'Tanggal Lahir',
+                    hintText: 'Pilih tanggal lahir',
+                    prefixIcon: const Icon(Icons.calendar_today),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                    enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Colors.grey.shade400)),
+                    focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Colors.deepPurple, width: 2)),
+                  ),
+                  onTap: () async {
+                    DateTime initial = DateTime.tryParse(_tanggalLahirController.text) ?? DateTime.now();
+                    final date = await showDatePicker(
+                      context: context,
+                      initialDate: initial,
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime.now(),
+                    );
+                    if (date != null) {
+                      _tanggalLahirController.text = date.toIso8601String().split('T').first;
+                    }
+                  },
                 ),
                 const SizedBox(height: 16),
                 CustomTextField(
