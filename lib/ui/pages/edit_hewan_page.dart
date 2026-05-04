@@ -22,6 +22,7 @@ class _EditHewanPageState extends State<EditHewanPage> {
   late final TextEditingController _tanggalLahirController;
   late final TextEditingController _hargaController;
   String? _status;
+  final List<String> _statusList = const ['Tersedia', 'Terjual', 'Dipesan'];
 
   @override
   void initState() {
@@ -30,7 +31,7 @@ class _EditHewanPageState extends State<EditHewanPage> {
     _jenisController = TextEditingController(text: widget.hewan.jenis);
     _tanggalLahirController = TextEditingController(text: widget.hewan.tanggalLahir);
     _hargaController = TextEditingController(text: widget.hewan.harga.toString());
-    _status = widget.hewan.status;
+    _status = _normalizeStatus(widget.hewan.status);
   }
 
   @override
@@ -40,6 +41,13 @@ class _EditHewanPageState extends State<EditHewanPage> {
     _tanggalLahirController.dispose();
     _hargaController.dispose();
     super.dispose();
+  }
+
+  String? _normalizeStatus(String status) {
+    for (final s in _statusList) {
+      if (s.toLowerCase() == status.toLowerCase()) return s;
+    }
+    return null;
   }
 
   void _onUpdate() {
@@ -125,7 +133,7 @@ class _EditHewanPageState extends State<EditHewanPage> {
                     labelText: 'Status',
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                   ),
-                  items: ['Tersedia', 'Terjual', 'Dipesan']
+                  items: _statusList
                       .map((s) => DropdownMenuItem(value: s, child: Text(s)))
                       .toList(),
                   onChanged: (val) => setState(() => _status = val),
