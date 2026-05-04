@@ -1,16 +1,37 @@
-# restapi0174
+# RestAPI 0174
 
-A new Flutter project.
+## Login Page
 
-## Getting Started
+![Login Page](screenshoot/login.png)
 
-This project is a starting point for a Flutter application.
+## Register Page
 
-A few resources to get you started if this is your first Flutter project:
+![Register Page](screenshoot/register.png)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Dashboard Page
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![Dashboard Page](screenshoot/dashboard.png)
+
+## Tambah Hewan
+
+![Tambah Hewan](screenshoot/add_hewan.png)
+
+## Setelah Tambah Hewan
+
+![Setelah Tambah Hewan](screenshoot/after_add.png)
+
+## Edit Hewan
+
+![Edit Hewan](screenshoot/edit_page.png)
+
+## Setelah Edit Hewan
+
+![Setelah Edit Hewan](screenshoot/after_edit.png)
+
+## Konfirmasi Hapus Hewan
+
+![Konfirmasi Hapus Hewan](screenshoot/delete_confirm.png)
+
+## Setelah Hapus Hewan
+
+![Setelah Hapus Hewan](screenshoot/after_delete.png)
