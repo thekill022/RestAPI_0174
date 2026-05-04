@@ -1,6 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:restapi0174/data/repositories/auth_repository.dart';
+import 'package:restapi0174/data/repositories/hewan_repository.dart';
+import 'package:restapi0174/logic/bloc/auth/auth_bloc.dart';
+import 'package:restapi0174/logic/bloc/auth/auth_event.dart';
+import 'package:restapi0174/logic/bloc/auth/auth_state.dart';
+import 'package:restapi0174/logic/bloc/hewan/hewan_bloc.dart';
+import 'package:restapi0174/logic/debug/bloc_observer.dart';
+import 'package:restapi0174/ui/pages/dashboard_page.dart';
+import 'package:restapi0174/ui/pages/login_page.dart';
 
 void main() {
+  Bloc.observer = SimpleBlocObserver();
   runApp(const MyApp());
 }
 
@@ -9,58 +20,55 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider(create: (_) => AuthRepository()),
+        RepositoryProvider(create: (_) => HewanRepository()),
+      ],
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => AuthBloc(
+              repository: context.read<AuthRepository>(),
+            )..add(AppStarted()),
+          ),
+          BlocProvider(
+            create: (context) => HewanBloc(
+              repository: context.read<HewanRepository>(),
+            ),
+          ),
+        ],
+        child: MaterialApp(
+          title: 'Rest API 0174',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+          ),
+          home: const AuthWrapper(),
+        ),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+class AuthWrapper extends StatelessWidget {
+  const AuthWrapper({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        if (state is AuthInitial) {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        }
+        if (state is Authenticated) {
+          return const DashboardPage();
+        }
+        return const LoginPage();
+      },
     );
   }
 }
