@@ -116,8 +116,9 @@ class _DashboardPageState extends State<DashboardPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Fitur tambah akan tersedia di praktikum berikutnya')),
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const AddHewanPage()),
           );
         },
         backgroundColor: Colors.deepPurple,
