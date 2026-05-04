@@ -11,7 +11,7 @@ import 'package:restapi0174/ui/pages/dashboard_page.dart';
 import 'package:restapi0174/ui/pages/login_page.dart';
 
 void main() {
-  Bloc.observer = SimpleBlocObserver();
+  Bloc.observer = AppBlocObserver();
   runApp(const MyApp());
 }
 
