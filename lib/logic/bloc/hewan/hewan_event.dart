@@ -1,17 +1,34 @@
 import 'package:equatable/equatable.dart';
 
-abstract class AuthEvent extends Equatable {
-  @override
-  List<Object> get props => [];
+abstract class HewanEvent extends Equatable
+{
+@override
+List<Object> get props => [];
 }
-class AppStarted extends AuthEvent {}
 
-class LoginRequested extends AuthEvent {
-  final String email, password;
-  LoginRequested(this.email, this.password);
+class FetchHewan extends HewanEvent {}
+
+class CreateHewan extends HewanEvent {
+  final Map<String, dynamic> data;
+  CreateHewan(this.data);
+
+  @override
+  List<Object> get props => [data];
 }
-class RegisterRequested extends AuthEvent {
-  final String name, email, password;
-  RegisterRequested (this.name, this.email, this.password);
+class UpdateHewan extends HewanEvent {
+  final int id;
+  final Map<String, dynamic> data;
+
+  UpdateHewan (this.id, this.data);
+
+  @override
+  List<Object> get props => [id, data];
 }
-class LogoutRequested extends AuthEvent {}
+class DeleteHewan extends HewanEvent {
+  final int id;
+
+  DeleteHewan(this.id);
+
+  @override
+  List<Object> get props => [id];
+}
