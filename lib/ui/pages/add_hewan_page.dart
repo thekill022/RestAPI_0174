@@ -51,6 +51,13 @@ class _AddHewanPageState extends State<AddHewanPage> {
                 hint: 'Masukkan jenis hewan',
                 prefixIcon: Icons.category,
               ),
+              const SizedBox(height: 16),
+              CustomTextField(
+                controller: _tanggalLahirController,
+                label: 'Tanggal Lahir',
+                hint: 'YYYY-MM-DD',
+                prefixIcon: Icons.calendar_today,
+              ),
             ],
           ),
         ),
