@@ -74,6 +74,7 @@ class _AddHewanPageState extends State<AddHewanPage> {
                   label: 'Nama Hewan',
                   hint: 'Masukkan nama hewan',
                   prefixIcon: Icons.pets,
+                  validator: (v) => v == null || v.isEmpty ? 'Nama tidak boleh kosong' : null,
                 ),
                 const SizedBox(height: 16),
                 CustomTextField(
@@ -81,6 +82,7 @@ class _AddHewanPageState extends State<AddHewanPage> {
                   label: 'Jenis Hewan',
                   hint: 'Masukkan jenis hewan',
                   prefixIcon: Icons.category,
+                  validator: (v) => v == null || v.isEmpty ? 'Jenis tidak boleh kosong' : null,
                 ),
                 const SizedBox(height: 16),
                 CustomTextField(
@@ -88,6 +90,7 @@ class _AddHewanPageState extends State<AddHewanPage> {
                   label: 'Tanggal Lahir',
                   hint: 'YYYY-MM-DD',
                   prefixIcon: Icons.calendar_today,
+                  validator: (v) => v == null || v.isEmpty ? 'Tanggal lahir tidak boleh kosong' : null,
                 ),
                 const SizedBox(height: 16),
                 CustomTextField(
@@ -96,6 +99,7 @@ class _AddHewanPageState extends State<AddHewanPage> {
                   hint: 'Masukkan harga',
                   prefixIcon: Icons.attach_money,
                   keyboardType: TextInputType.number,
+                  validator: (v) => v == null || v.isEmpty ? 'Harga tidak boleh kosong' : null,
                 ),
                 const SizedBox(height: 16),
                 DropdownButtonFormField<String>(
@@ -108,6 +112,7 @@ class _AddHewanPageState extends State<AddHewanPage> {
                       .map((s) => DropdownMenuItem(value: s, child: Text(s)))
                       .toList(),
                   onChanged: (val) => setState(() => _status = val),
+                  validator: (v) => v == null ? 'Status harus dipilih' : null,
                 ),
                 const SizedBox(height: 24),
                 ElevatedButton(
