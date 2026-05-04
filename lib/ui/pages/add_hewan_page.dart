@@ -25,6 +25,12 @@ class _AddHewanPageState extends State<AddHewanPage> {
     super.dispose();
   }
 
+  void _onSimpan() {
+    if (_formKey.currentState!.validate()) {
+      // simpan data
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,6 +44,7 @@ class _AddHewanPageState extends State<AddHewanPage> {
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               CustomTextField(
                 controller: _namaController,
@@ -78,6 +85,16 @@ class _AddHewanPageState extends State<AddHewanPage> {
                     .map((s) => DropdownMenuItem(value: s, child: Text(s)))
                     .toList(),
                 onChanged: (val) => setState(() => _status = val),
+              ),
+              const SizedBox(height: 24),
+              ElevatedButton(
+                onPressed: _onSimpan,
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  backgroundColor: Colors.deepPurple,
+                ),
+                child: const Text('Simpan', style: TextStyle(fontSize: 16, color: Colors.white)),
               ),
             ],
           ),
