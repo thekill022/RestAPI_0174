@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:restapi0174/ui/widgets/custom_widget.dart';
 
 class AddHewanPage extends StatefulWidget {
   const AddHewanPage({super.key});
@@ -33,7 +34,19 @@ class _AddHewanPageState extends State<AddHewanPage> {
       ),
       body: Form(
         key: _formKey,
-        child: const Center(child: Text('Form Tambah Hewan')),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            children: [
+              CustomTextField(
+                controller: _namaController,
+                label: 'Nama Hewan',
+                hint: 'Masukkan nama hewan',
+                prefixIcon: Icons.pets,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
