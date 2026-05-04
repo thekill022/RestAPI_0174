@@ -7,6 +7,7 @@ import 'package:restapi0174/logic/bloc/auth/auth_bloc.dart';
 import 'package:restapi0174/logic/bloc/auth/auth_event.dart';
 import 'package:restapi0174/logic/bloc/hewan/hewan_state.dart';
 import 'package:restapi0174/ui/pages/add_hewan_page.dart';
+import 'package:restapi0174/ui/pages/edit_hewan_page.dart';
 import 'package:restapi0174/ui/pages/login_page.dart';
 
 class DashboardPage extends StatefulWidget {
