@@ -3,7 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restapi0174/data/models/hewan_model.dart';
 import 'package:restapi0174/logic/bloc/hewan/hewan_bloc.dart';
 import 'package:restapi0174/logic/bloc/hewan/hewan_event.dart';
+import 'package:restapi0174/logic/bloc/auth/auth_bloc.dart';
+import 'package:restapi0174/logic/bloc/auth/auth_event.dart';
 import 'package:restapi0174/logic/bloc/hewan/hewan_state.dart';
+import 'package:restapi0174/ui/pages/login_page.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -39,6 +42,13 @@ class _DashboardPageState extends State<DashboardPage> {
         title: const Text('Dashboard Hewan'),
         backgroundColor: Colors.deepPurple,
         foregroundColor: Colors.white,
+        actions: [
+          IconButton(
+            onPressed: _onLogout,
+            icon: const Icon(Icons.logout),
+            tooltip: 'Logout',
+          ),
+        ],
       ),
       body: BlocConsumer<HewanBloc, HewanState>(
         listener: (context, state) {
@@ -60,13 +70,18 @@ class _DashboardPageState extends State<DashboardPage> {
                 child: Text('Tidak ada data hewan'),
               );
             }
-            return ListView.builder(
-              padding: const EdgeInsets.all(12),
-              itemCount: list.length,
-              itemBuilder: (context, index) {
-                final hewan = list[index];
-                return _buildHewanCard(hewan);
+            return RefreshIndicator(
+              onRefresh: () async {
+                context.read<HewanBloc>().add(FetchHewan());
               },
+              child: ListView.builder(
+                padding: const EdgeInsets.all(12),
+                itemCount: list.length,
+                itemBuilder: (context, index) {
+                  final hewan = list[index];
+                  return _buildHewanCard(hewan);
+                },
+              ),
             );
           }
 
@@ -91,6 +106,23 @@ class _DashboardPageState extends State<DashboardPage> {
           return const Center(child: Text('Memuat data...'));
         },
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Fitur tambah akan tersedia di praktikum berikutnya')),
+          );
+        },
+        backgroundColor: Colors.deepPurple,
+        child: const Icon(Icons.add, color: Colors.white),
+      ),
+    );
+  }
+
+  void _onLogout() {
+    context.read<AuthBloc>().add(LogoutRequested());
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => const LoginPage()),
     );
   }
 
