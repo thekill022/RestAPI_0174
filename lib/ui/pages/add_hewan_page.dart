@@ -35,7 +35,7 @@ class _AddHewanPageState extends State<AddHewanPage> {
       final data = {
         'nama': _namaController.text.trim(),
         'jenis': _jenisController.text.trim(),
-        'tanggalLahir': _tanggalLahirController.text.trim(),
+        'tanggal_lahir': _tanggalLahirController.text.trim(),
         'harga': int.tryParse(_hargaController.text) ?? 0,
         'status': _status,
       };
