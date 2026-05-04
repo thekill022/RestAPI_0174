@@ -53,6 +53,11 @@ class _DashboardPageState extends State<DashboardPage> {
         foregroundColor: Colors.white,
         actions: [
           IconButton(
+            onPressed: () => context.read<HewanBloc>().add(FetchHewan()),
+            icon: const Icon(Icons.refresh),
+            tooltip: 'Refresh',
+          ),
+          IconButton(
             onPressed: _onLogout,
             icon: const Icon(Icons.logout),
             tooltip: 'Logout',
