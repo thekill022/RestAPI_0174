@@ -196,8 +196,9 @@ class _DashboardPageState extends State<DashboardPage> {
               children: [
                 OutlinedButton.icon(
                   onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Fitur edit akan tersedia di praktikum berikutnya')),
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => EditHewanPage(hewan: hewan)),
                     );
                   },
                   icon: const Icon(Icons.edit, size: 18),
